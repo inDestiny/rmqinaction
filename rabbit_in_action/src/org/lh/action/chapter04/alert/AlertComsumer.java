@@ -1,4 +1,4 @@
-package org.lh.rabbitmqinaction.chapter04.alert;
+package org.lh.action.chapter04.alert;
 
 import java.io.File;
 import java.io.FileInputStream;
