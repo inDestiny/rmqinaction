@@ -66,7 +66,7 @@ public class AlertComsumer {
 		
 		//start to consume critical
 		QueueingConsumer criticalQueueingConsumer = new QueueingConsumer(channel);
-		channel.basicConsume(criticalQueueName, false, "rate_limit", criticalQueueingConsumer);
+		channel.basicConsume(criticalQueueName, false, "critical", criticalQueueingConsumer);
 		new ConsumeThread(criticalQueueingConsumer,channel).startConsume();
 		
 		//start to consume rate_limit
@@ -96,7 +96,7 @@ public class AlertComsumer {
 				while(isReceive){
 					//收听消息
 					QueueingConsumer.Delivery delivery = consumer.nextDelivery();
-					String msg = new String(delivery.getBody(), "utf-8");
+					String msg = new String(delivery.getBody(), "UTF-8");
 					System.out.println(this.consumer.getConsumerTag()+" 收到消息: "+msg);
 					//here, you can do sth. to alert, for example send email...
 					//mailTo();
@@ -118,6 +118,7 @@ public class AlertComsumer {
 		/**
 		 * stop to consume
 		 */
+		@SuppressWarnings("unused")
 		public void stopConsume(){
 			try {
 				this.channel.basicCancel(this.consumer.getConsumerTag());
