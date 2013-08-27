@@ -54,6 +54,9 @@ public class AlertProducer {
 	
 	public static void main(String[] args) throws IOException {
 		Channel channel = conn.createChannel();
+		/**
+		 * mandatory:false, block the publish before rmq return;
+		 */
 		channel.basicPublish(EXCHANGE_NAME, "critical.rate_limit", false, null, "the msg will be received critical and rate_limit.".getBytes("UTF-8"));
 		channel.basicPublish(EXCHANGE_NAME, "critical.xxx", false, null, "the msg will be received critical.".getBytes("UTF-8"));
 		channel.basicPublish(EXCHANGE_NAME, "yyy.rate_limit", false, null, "the msg will be received rate_limit.".getBytes("UTF-8"));
