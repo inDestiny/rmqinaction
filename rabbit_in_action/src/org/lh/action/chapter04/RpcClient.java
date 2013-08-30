@@ -25,8 +25,7 @@ public class RpcClient {
 	private static String PASS = null;
 	private static String VHOST = null;
 	private static String EXCHANGE_NAME = "rpc_ex";
-	private static String RPC_CLIENT_ROUTE_KEY = "rpc_client_route_key";
-	private static String RPC_SERVER_ROUTE_KEY = "rpc_server_route_key";
+	private static String RPC_ROUTE_KEY = "rpc_route_key";
 	private static ConnectionFactory fac = null;
 	private static Connection conn = null;
 	static{
@@ -112,7 +111,7 @@ public class RpcClient {
 		//开始监听RPCServer回复队列
 		//生产随机数发送给RPCServer， RPCServer返回结果时需要带回确认
 		String corrId = UUID.randomUUID().toString();
-		channel.queueBind(replyQueueName, EXCHANGE_NAME, RPC_CLIENT_ROUTE_KEY);
+		channel.queueBind(replyQueueName, EXCHANGE_NAME, replyQueueName);
 		QueueingConsumer replyConsumer = new QueueingConsumer(channel);
 		channel.basicConsume(replyQueueName, true, replyConsumer);
 		new ReplyConsumeThread(replyConsumer, channel, corrId).startConsume();
@@ -123,6 +122,6 @@ public class RpcClient {
                 .correlationId(corrId)
                 .replyTo(replyQueueName)
                 .build();
-		channel.basicPublish(EXCHANGE_NAME, RPC_SERVER_ROUTE_KEY, props, "我是RpcClient.".getBytes("UTF-8"));
+		channel.basicPublish(EXCHANGE_NAME, RPC_ROUTE_KEY, props, "我是RpcClient.".getBytes("UTF-8"));
 	}
 }

@@ -25,8 +25,7 @@ public class RpcServer {
 	private static String VHOST = null;
 	private static String EXCHANGE_NAME = "rpc_ex";
 	private static String RPC_QUEUE_NAME = "rpc_queue";
-	private static String RPC_SERVER_ROUTE_KEY = "rpc_server_route_key";
-	private static String RPC_CLIENT_ROUTE_KEY = "rpc_client_route_key";
+	private static String RPC_ROUTE_KEY = "rpc_route_key";
 	private static ConnectionFactory fac = null;
 	private static Connection conn = null;
 	static{
@@ -60,7 +59,7 @@ public class RpcServer {
 		channel.exchangeDeclare(EXCHANGE_NAME, "direct", false, false, null);
 		//channel.basicQos(1);
 		channel.queueDeclare(RPC_QUEUE_NAME, false, false, false, null);
-		channel.queueBind(RPC_QUEUE_NAME, EXCHANGE_NAME, RPC_SERVER_ROUTE_KEY);
+		channel.queueBind(RPC_QUEUE_NAME, EXCHANGE_NAME, RPC_ROUTE_KEY);
 		QueueingConsumer rpcConsumer = new QueueingConsumer(channel);
 		channel.basicConsume(RPC_QUEUE_NAME, false, "rpc_tag", rpcConsumer);
 		new RpcConsumeThread(rpcConsumer,channel).startConsume();
@@ -94,7 +93,7 @@ public class RpcServer {
 					//do something
 					//3.回复客户, reply_to是由客户端请求时自带过来的，客户端会收听在以reply_to为routekey的队列上，所以将其作为routekey,发布回复消息 
 					//System.out.println("向队列["+props.getReplyTo()+"]回复");
-					channel.basicPublish(EXCHANGE_NAME, RPC_CLIENT_ROUTE_KEY, replyProps, "RPCServer已经处理完请求.".getBytes("UTF-8"));
+					channel.basicPublish(EXCHANGE_NAME, props.getReplyTo(), replyProps, "RPCServer已经处理完请求.".getBytes("UTF-8"));
 					//4.确认服务器已收到RPC请求
 					channel.basicAck(delivery.getEnvelope().getDeliveryTag(), true);
 				}
