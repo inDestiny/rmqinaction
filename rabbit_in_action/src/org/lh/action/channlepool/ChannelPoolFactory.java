@@ -9,7 +9,6 @@ import com.rabbitmq.client.Connection;
  * channel池
  * @author Hao Lin
  * @since 2013
- * @location symantec
  */
 public class ChannelPoolFactory implements PoolableObjectFactory<Channel> {
 	private Connection conn = null;

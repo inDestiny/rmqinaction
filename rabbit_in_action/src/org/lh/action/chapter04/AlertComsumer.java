@@ -14,7 +14,6 @@ import com.rabbitmq.client.QueueingConsumer;
  * Alert模型消费者
  * @author Hao Lin
  * @since 2013
- * @location symantec
  */
 public class AlertComsumer {
 	private static String SERVER_IP = null;

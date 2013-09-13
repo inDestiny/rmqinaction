@@ -10,7 +10,6 @@ import com.rabbitmq.client.QueueingConsumer;
  * 监控服务器日志信息
  * @author Hao Lin
  * @since 2013
- * @location symantec
  */
 public class ServerLogMonitor {
 	private static final String host = "192.168.137.77";

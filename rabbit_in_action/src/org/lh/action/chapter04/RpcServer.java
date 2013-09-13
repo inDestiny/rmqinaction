@@ -15,7 +15,6 @@ import com.rabbitmq.client.QueueingConsumer;
  * Rpc Server
  * @author Hao Lin
  * @since 2013
- * @location symantec
  */
 public class RpcServer {
 	private static String SERVER_IP = null;

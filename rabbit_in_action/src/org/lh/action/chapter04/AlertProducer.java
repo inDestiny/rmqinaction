@@ -14,7 +14,6 @@ import com.rabbitmq.client.ConnectionFactory;
  * 
  * @author Hao Lin
  * @since 2013
- * @location symantec
  */
 public class AlertProducer {
 	private static String SERVER_IP = null;
